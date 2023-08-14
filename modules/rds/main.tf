@@ -40,31 +40,25 @@ resource "aws_db_instance" "default" {
 }
 
 resource "aws_db_subnet_group" "default" {
-  name       = var.workload
+  name       = "guardduty"
   subnet_ids = var.subnets
 }
 
-data "aws_vpc" "selected" {
-  id = var.vpc_id
-}
-
 resource "aws_security_group" "allow_postgresql" {
-  name        = "rds-${var.workload}"
+  name        = "rds-guardduty"
   description = "Allow TLS inbound traffic to RDS Postgres"
   vpc_id      = var.vpc_id
 
   tags = {
-    Name = "sg-rds-${var.workload}"
+    Name = "sg-rds-guardduty"
   }
 }
 
 resource "aws_security_group_rule" "ingress" {
-  description       = "Allows connection to Postgres Private Endpoint"
   type              = "ingress"
   from_port         = 5432
   to_port           = 5432
   protocol          = "tcp"
-  cidr_blocks       = [data.aws_vpc.selected.cidr_block]
-  ipv6_cidr_blocks  = []
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.allow_postgresql.id
 }
