@@ -29,3 +29,10 @@ module "rds" {
   availability_zone = var.primary_availability_zone
   subnets           = module.vpc.subnets
 }
+
+module "ec2-instance" {
+  source = "./modules/ec2-instance"
+  vpc_id = module.vpc.vpc_id
+  az     = var.primary_availability_zone
+  subnet = module.vpc.subnets[0]
+}
