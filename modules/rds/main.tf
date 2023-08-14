@@ -1,42 +1,23 @@
-resource "aws_db_instance" "default" {
-  identifier     = "rds-guardduty"
-  db_name        = "guarddutydb"
-  engine         = "postgres"
-  engine_version = "15.3"
-  username       = "guardduty"
-  password       = "p4ssw0rd"
-
-  # Network
-  db_subnet_group_name = aws_db_subnet_group.default.name
-  availability_zone    = var.availability_zone
-  publicly_accessible  = true
-
-  # Resources
-  instance_class    = "db.t4g.micro"
-  allocated_storage = 30
-  storage_type      = "gp3"
-
-  # Security
-  storage_encrypted      = true
+resource "aws_rds_cluster" "default" {
+  cluster_identifier     = "aurora-cluster-guardduty"
+  engine                 = "aurora-mysql"
+  engine_version         = "8.0.mysql_aurora.3.04.0"
+  availability_zones     = var.azs
+  database_name          = "guardduty"
+  master_username        = "aurora"
+  master_password        = "p4ssw0rd"
+  skip_final_snapshot    = true
+  db_subnet_group_name   = aws_db_subnet_group.default.name
   vpc_security_group_ids = [aws_security_group.allow_postgresql.id]
+}
 
-  # Multi-AZ
-  multi_az = false
-
-  # Upgrades
-  auto_minor_version_upgrade  = true
-  allow_major_version_upgrade = false
-  apply_immediately           = false
-  maintenance_window          = "Sun:05:00-Sun:06:00"
-
-  blue_green_update {
-    enabled = false
-  }
-
-  # Protect
-  deletion_protection      = false
-  skip_final_snapshot      = true
-  delete_automated_backups = true
+resource "aws_rds_cluster_instance" "cluster_instances" {
+  identifier          = "aurora-cluster-demo-1"
+  publicly_accessible = true
+  cluster_identifier  = aws_rds_cluster.default.id
+  instance_class      = "db.t3.large"
+  engine              = aws_rds_cluster.default.engine
+  engine_version      = aws_rds_cluster.default.engine_version
 }
 
 resource "aws_db_subnet_group" "default" {

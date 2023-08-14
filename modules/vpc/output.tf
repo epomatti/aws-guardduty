@@ -2,12 +2,8 @@ output "vpc_id" {
   value = aws_vpc.main.id
 }
 
-output "az1" {
-  value = local.az1
-}
-
-output "az2" {
-  value = local.az2
+output "azs" {
+  value = [local.az1, local.az2]
 }
 
 output "subnets" {

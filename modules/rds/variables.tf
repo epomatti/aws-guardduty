@@ -2,8 +2,8 @@ variable "vpc_id" {
   type = string
 }
 
-variable "availability_zone" {
-  type = string
+variable "azs" {
+  type = list(string)
 }
 
 variable "subnets" {
