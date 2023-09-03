@@ -28,7 +28,8 @@ resource "aws_instance" "box" {
   ebs_optimized = false
 
   root_block_device {
-    encrypted = true
+    encrypted  = true
+    kms_key_id = aws_kms_key.main.arn
   }
 
   lifecycle {
@@ -40,7 +41,7 @@ resource "aws_instance" "box" {
   }
 
   tags = {
-    Name = "${local.affix}-nat"
+    Name = "${local.affix}"
   }
 }
 
@@ -99,4 +100,44 @@ resource "aws_security_group_rule" "allow_all_egress" {
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.box.id
+}
+
+### KMS ###
+
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
+locals {
+  aws_region     = data.aws_region.current.name
+  aws_account_id = data.aws_caller_identity.current.account_id
+}
+
+resource "aws_kms_key" "main" {
+  description             = "kms-ec2-guardduty-key"
+  deletion_window_in_days = 7
+  enable_key_rotation     = true
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "Enable IAM User Permissions"
+        Effect = "Allow"
+        Principal = {
+          "AWS" : "arn:aws:iam::${local.aws_account_id}:root"
+        }
+        Action   = "kms:*",
+        Resource = "*"
+      },
+      {
+        Sid    = "GuardyDutyEC2Malware"
+        Action = "kms:*"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+        Resource = "*"
+      },
+    ]
+  })
 }
