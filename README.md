@@ -16,7 +16,7 @@ The configuration will also provision IP sets in `TXT` format for:
 - Trusted IPs
 - Threat IPs
 
-## EC2 Malware Scan
+### EC2 Malware Scan
 
 Execute an on-demand scan on an instance:
 
