@@ -4,7 +4,7 @@ Threat detection with AWS GuardDuty.
 
 Events are sourced from RDS Aurora, S3 and EC2.
 
-> 👉 GuardDuty will be enabled by Terraform
+> 💡 GuardDuty will be enabled by Terraform
 
 ```sh
 terraform plan
