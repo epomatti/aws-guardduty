@@ -21,5 +21,6 @@ The configuration will also provision IP sets in `TXT` format for:
 Execute an on-demand scan on an instance:
 
 ```sh
-aws guardduty start-malware-scan --resource-arn arn:aws:ec2:us-east-2:000000000000:instance/i-00000000000000000
+aws guardduty start-malware-scan \
+    --resource-arn 'arn:aws:ec2:us-east-2:000000000000:instance/i-00000000000000000'
 ```
