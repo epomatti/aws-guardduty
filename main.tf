@@ -36,3 +36,8 @@ module "ec2-instance" {
   az     = var.primary_availability_zone
   subnet = module.vpc.subnets[0]
 }
+
+module "ipset" {
+  source                = "./modules/ipset"
+  guardduty_detector_id = aws_guardduty_detector.main.id
+}

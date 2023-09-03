@@ -9,6 +9,11 @@ resource "aws_rds_cluster" "default" {
   skip_final_snapshot    = true
   db_subnet_group_name   = aws_db_subnet_group.default.name
   vpc_security_group_ids = [aws_security_group.allow_postgresql.id]
+
+  # FIXME: Need to fix it
+  lifecycle {
+    ignore_changes = [availability_zones]
+  }
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
