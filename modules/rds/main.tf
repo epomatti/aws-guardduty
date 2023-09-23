@@ -20,7 +20,7 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
   identifier          = "aurora-cluster-demo-1"
   publicly_accessible = true
   cluster_identifier  = aws_rds_cluster.default.id
-  instance_class      = "db.t3.large"
+  instance_class      = "db.t4g.medium"
   engine              = aws_rds_cluster.default.engine
   engine_version      = aws_rds_cluster.default.engine_version
 }
