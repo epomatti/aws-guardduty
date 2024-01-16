@@ -44,5 +44,13 @@ Some services are [not supported][2]:
 
 > GuardDuty Malware Protection doesn't support Fargate with either Amazon EKS or Amazon ECS.
 
+## 
+
+```
+aws s3 cp s3://307168627858-us-east-2-guardduty-agent-rpm-artifacts/1.0.0/arm64/amazon-guardduty-agent-1.0.0.arm64.rpm ./amazon-guardduty-agent-1.0.0.arm64.rpm
+aws s3 cp s3://307168627858-us-east-2-guardduty-agent-rpm-artifacts/1.0.0/arm64/amazon-guardduty-agent-1.0.0.arm64.sig ./amazon-guardduty-agent-1.0.0.arm64.sig
+aws s3 cp s3://307168627858-us-east-2-guardduty-agent-rpm-artifacts/1.0.0/publickey.pem ./publickey.pem
+```
+
 [1]: https://aws.amazon.com/guardduty/faqs/
 [2]: https://docs.aws.amazon.com/guardduty/latest/ug/malware-protection.html

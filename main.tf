@@ -37,6 +37,15 @@ module "ec2-instance" {
   vpc_id = module.vpc.vpc_id
   az     = var.primary_availability_zone
   subnet = module.vpc.subnets[0]
+
+  depends_on = [module.vpce]
+}
+
+module "vpce" {
+  source    = "./modules/vpce"
+  region    = var.region
+  vpc_id    = module.vpc.vpc_id
+  subnet_id = module.vpc.subnets[0]
 }
 
 module "ipset" {

@@ -74,6 +74,11 @@ resource "aws_iam_role_policy_attachment" "box" {
   policy_arn = data.aws_iam_policy.AmazonSSMManagedInstanceCore.arn
 }
 
+resource "aws_iam_role_policy_attachment" "s3" {
+  role       = aws_iam_role.box.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
+
 resource "aws_security_group" "box" {
   name        = "ec2-ssm-${local.affix}"
   description = "Controls access for EC2 via Session Manager"

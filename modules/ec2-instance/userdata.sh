@@ -6,6 +6,6 @@ export NEEDRESTART_MODE=a
 apt update
 apt upgrade -y
 
-
+apt install unzip rpm -y
 
 reboot
