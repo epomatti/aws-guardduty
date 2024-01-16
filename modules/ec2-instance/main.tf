@@ -8,7 +8,8 @@ resource "aws_iam_instance_profile" "box" {
 }
 
 resource "aws_instance" "box" {
-  ami           = "ami-08fdd91d87f63bb09"
+  # Debian 12 (20231013-1532)
+  ami           = "ami-0c758b376a9cf7862"
   instance_type = "t4g.micro"
 
   associate_public_ip_address = true
@@ -17,7 +18,7 @@ resource "aws_instance" "box" {
 
   availability_zone    = var.az
   iam_instance_profile = aws_iam_instance_profile.box.id
-  user_data            = file("${path.module}/userdata.sh")
+  user_data            = file("${path.module}/debian12.sh")
 
   metadata_options {
     http_endpoint = "enabled"
@@ -108,7 +109,6 @@ resource "aws_security_group_rule" "allow_all_egress" {
 }
 
 ### KMS ###
-
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
