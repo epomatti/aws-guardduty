@@ -9,7 +9,7 @@ resource "aws_iam_instance_profile" "box" {
 
 resource "aws_instance" "box" {
   ami           = "ami-08fdd91d87f63bb09"
-  instance_type = "t4g.nano"
+  instance_type = "t4g.micro"
 
   associate_public_ip_address = true
   subnet_id                   = var.subnet
@@ -24,8 +24,8 @@ resource "aws_instance" "box" {
     http_tokens   = "required"
   }
 
-  monitoring    = false
-  ebs_optimized = false
+  monitoring    = true
+  ebs_optimized = true
 
   root_block_device {
     encrypted  = true
@@ -48,7 +48,7 @@ resource "aws_instance" "box" {
 ### IAM Role ###
 
 resource "aws_iam_role" "box" {
-  name = "${local.affix}"
+  name = local.affix
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
