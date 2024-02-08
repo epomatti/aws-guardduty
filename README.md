@@ -48,22 +48,10 @@ Some services are [not supported][2]:
 
 > 💡 Preview
 
-The VPC endpoint `com.amazonaws.us-east-2.guardduty-data` will be created.
+The VPC endpoint `com.amazonaws.us-east-2.guardduty-data` will be created by Terraform.
 
 Manually install the GuardDuty agent via SSM document `AmazonGuardDuty-ConfigureRuntimeMonitoringSsmPlugin` with name `AmazonGuardDuty-RuntimeMonitoringSsmPlugin`.
 
-Or, install via RPM:
-
-```sh
-aws s3 cp s3://307168627858-us-east-2-guardduty-agent-rpm-artifacts/1.0.0/arm64/amazon-guardduty-agent-1.0.0.arm64.rpm ./amazon-guardduty-agent-1.0.0.arm64.rpm
-aws s3 cp s3://307168627858-us-east-2-guardduty-agent-rpm-artifacts/1.0.0/arm64/amazon-guardduty-agent-1.0.0.arm64.sig ./amazon-guardduty-agent-1.0.0.arm64.sig
-aws s3 cp s3://307168627858-us-east-2-guardduty-agent-rpm-artifacts/1.0.0/publickey.pem ./publickey.pem
-
-gpg --import publickey.pem
-gpg --verify amazon-guardduty-agent-1.0.0.arm64.sig amazon-guardduty-agent-1.0.0.arm64.rpm
-
-sudo rpm -ivh amazon-guardduty-agent-1.0.0.arm64.rpm
-```
 
 [1]: https://aws.amazon.com/guardduty/faqs/
 [2]: https://docs.aws.amazon.com/guardduty/latest/ug/malware-protection.html
