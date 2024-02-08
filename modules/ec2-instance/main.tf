@@ -8,9 +8,8 @@ resource "aws_iam_instance_profile" "box" {
 }
 
 resource "aws_instance" "box" {
-  # Debian 12 (20231013-1532)
-  ami           = "ami-0c758b376a9cf7862"
-  instance_type = "t4g.micro"
+  ami           = var.ami
+  instance_type = var.instance_type
 
   associate_public_ip_address = true
   subnet_id                   = var.subnet
@@ -18,14 +17,14 @@ resource "aws_instance" "box" {
 
   availability_zone    = var.az
   iam_instance_profile = aws_iam_instance_profile.box.id
-  user_data            = file("${path.module}/debian12.sh")
+  user_data            = file("${path.module}/userdata/${var.user_data}")
 
   metadata_options {
     http_endpoint = "enabled"
     http_tokens   = "required"
   }
 
-  monitoring    = true
+  monitoring    = false
   ebs_optimized = true
 
   root_block_device {
