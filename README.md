@@ -46,12 +46,24 @@ Some services are [not supported][2]:
 
 ## Runtime Monitoring
 
-> 💡 Preview
+The VPC endpoint `com.amazonaws.us-east-2.guardduty-data` will be created by Terraform. GuardDuty service states it does not charge for these endpoints.
 
-The VPC endpoint `com.amazonaws.us-east-2.guardduty-data` will be created by Terraform.
+Let GuardDuty use [automated][3] agent configuration, or install it manually.
 
-Manually install the GuardDuty agent via SSM document `AmazonGuardDuty-ConfigureRuntimeMonitoringSsmPlugin` with name `AmazonGuardDuty-RuntimeMonitoringSsmPlugin`.
+<img src=".assets/guardduty-runtimemonitoring-enabled.png" width=350/>
+
+<img src=".assets/guardduty-ec2-enabled.png" width=350/>
+
+As of today, it looks like Ubuntu is not supported at the moment:
+
+> failed to find platform: no manifest found for platform: ubuntu, version 22.04, architecture arm64
+
+Example of Amazon Linux instance covered by GuardDuty:
+
+<img src=".assets/guardduty-coverage.png" />
+
 
 
 [1]: https://aws.amazon.com/guardduty/faqs/
 [2]: https://docs.aws.amazon.com/guardduty/latest/ug/malware-protection.html
+[3]: https://docs.aws.amazon.com/guardduty/latest/ug/how-runtime-monitoring-works-ec2.html#use-automated-agent-config-ec2
