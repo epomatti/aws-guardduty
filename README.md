@@ -44,7 +44,7 @@ Some services are [not supported][2]:
 
 > GuardDuty Malware Protection doesn't support Fargate with either Amazon EKS or Amazon ECS.
 
-## Runtime Monitoring
+## 🚨 Runtime Monitoring
 
 The VPC endpoint `com.amazonaws.us-east-2.guardduty-data` will be created by Terraform. GuardDuty service states it does not charge for these endpoints.
 
