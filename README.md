@@ -54,7 +54,18 @@ Let GuardDuty use [automated][3] agent configuration, or install it manually.
 
 <img src=".assets/guardduty-ec2-enabled.png" width=350/>
 
-As of today, it looks like Ubuntu is not supported at the moment:
+If SSM Default Host Management is enabled, the agent will be automatically installed.
+
+Otherwise, install the agent manually:
+
+```sh
+aws ssm send-command \
+    --document-name "AWS-ConfigureAWSPackage" \
+    --instance-ids "i-00000000000000000" \
+    --parameters '{"action":["Install"],"installationType":["Uninstall and reinstall"],"name":["AmazonGuardDuty-RuntimeMonitoringSsmPlugin"]}'
+```
+
+As of today, it looks like Ubuntu is not supported:
 
 > failed to find platform: no manifest found for platform: ubuntu, version 22.04, architecture arm64
 
