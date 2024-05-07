@@ -49,7 +49,11 @@ aws ssm send-command \
     --parameters '{"action":["Install"],"installationType":["Uninstall and reinstall"],"name":["AmazonGuardDuty-RuntimeMonitoringSsmPlugin"]}'
 ```
 
-As of today, it looks like Ubuntu is not supported:
+As of today, Ubuntu is [not yet supported][4]:
+
+> Although the support for Ubuntu is not available right now, it will be in the near future.
+
+Installing for Ubuntu will trigger an error message like this:
 
 > failed to find platform: no manifest found for platform: ubuntu, version 22.04, architecture arm64
 
@@ -58,7 +62,7 @@ Example of Amazon Linux instance covered by GuardDuty:
 <img src=".assets/guardduty-coverage.png" />
 
 
-
 [1]: https://aws.amazon.com/guardduty/faqs/
 [2]: https://docs.aws.amazon.com/guardduty/latest/ug/malware-protection.html
 [3]: https://docs.aws.amazon.com/guardduty/latest/ug/how-runtime-monitoring-works-ec2.html#use-automated-agent-config-ec2
+[4]: https://docs.aws.amazon.com/guardduty/latest/ug/prereq-runtime-monitoring-ec2-support.html#validating-architecture-req-ec2
