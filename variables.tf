@@ -12,6 +12,10 @@ variable "create_rds" {
   type = bool
 }
 
+variable "rds_instance_class" {
+  type = string
+}
+
 variable "ami" {
   type = string
 }

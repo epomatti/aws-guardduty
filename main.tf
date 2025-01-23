@@ -25,11 +25,12 @@ module "vpc" {
 }
 
 module "rds" {
-  count   = var.create_rds == true ? 1 : 0
-  source  = "./modules/rds"
-  vpc_id  = module.vpc.vpc_id
-  azs     = module.vpc.azs
-  subnets = module.vpc.subnets
+  count              = var.create_rds == true ? 1 : 0
+  source             = "./modules/rds"
+  vpc_id             = module.vpc.vpc_id
+  azs                = module.vpc.azs
+  subnets            = module.vpc.subnets
+  rds_instance_class = var.rds_instance_class
 }
 
 module "ec2-instance" {

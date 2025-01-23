@@ -9,3 +9,7 @@ variable "azs" {
 variable "subnets" {
   type = list(string)
 }
+
+variable "rds_instance_class" {
+  type = string
+}
