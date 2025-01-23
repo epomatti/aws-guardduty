@@ -19,6 +19,12 @@ terraform plan
 terraform apply -auto-approve
 ```
 
+Connect to the instance and check the initialization:
+
+```sh
+cloud-init status --wait
+```
+
 The configuration will also provision IP sets in `TXT` format for:
 
 - Trusted IPs

@@ -24,7 +24,7 @@ resource "aws_instance" "box" {
     http_tokens   = "required"
   }
 
-  monitoring    = false
+  monitoring    = true
   ebs_optimized = true
 
   root_block_device {
