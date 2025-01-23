@@ -3,7 +3,7 @@ locals {
 }
 
 resource "aws_iam_instance_profile" "box" {
-  name = "test-intance"
+  name = "test-instance"
   role = aws_iam_role.box.id
 }
 

@@ -6,6 +6,14 @@ Events are sourced from RDS Aurora, S3 and EC2.
 
 > 💡 GuardDuty will be enabled by Terraform
 
+Set the variables:
+
+```sh
+cp config/template.tfvars .auto.tfvars
+```
+
+Create the resources:
+
 ```sh
 terraform plan
 terraform apply -auto-approve
@@ -30,6 +38,8 @@ aws guardduty start-malware-scan \
 
 ## 🚨 Runtime Monitoring
 
+Check for the [supported systems and requirements][5].
+
 The VPC endpoint `com.amazonaws.us-east-2.guardduty-data` will be created by Terraform. GuardDuty service states it does not charge for these endpoints.
 
 Let GuardDuty use [automated][3] agent configuration, or install it manually.
@@ -49,14 +59,6 @@ aws ssm send-command \
     --parameters '{"action":["Install"],"installationType":["Uninstall and reinstall"],"name":["AmazonGuardDuty-RuntimeMonitoringSsmPlugin"]}'
 ```
 
-As of today, Ubuntu is [not yet supported][4]:
-
-> Although the support for Ubuntu is not available right now, it will be in the near future.
-
-Installing for Ubuntu will trigger an error message like this:
-
-> failed to find platform: no manifest found for platform: ubuntu, version 22.04, architecture arm64
-
 Example of Amazon Linux instance covered by GuardDuty:
 
 <img src=".assets/guardduty-coverage.png" />
@@ -66,3 +68,4 @@ Example of Amazon Linux instance covered by GuardDuty:
 [2]: https://docs.aws.amazon.com/guardduty/latest/ug/malware-protection.html
 [3]: https://docs.aws.amazon.com/guardduty/latest/ug/how-runtime-monitoring-works-ec2.html#use-automated-agent-config-ec2
 [4]: https://docs.aws.amazon.com/guardduty/latest/ug/prereq-runtime-monitoring-ec2-support.html#validating-architecture-req-ec2
+[5]: https://docs.aws.amazon.com/guardduty/latest/ug/prereq-runtime-monitoring-ec2-support.html

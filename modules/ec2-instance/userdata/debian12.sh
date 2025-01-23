@@ -14,6 +14,3 @@ wget https://s3.us-east-2.amazonaws.com/amazon-ssm-us-east-2/latest/debian_arm64
 dpkg -i amazon-ssm-agent.deb
 systemctl enable amazon-ssm-agent
 systemctl start amazon-ssm-agent
-
-
-reboot
