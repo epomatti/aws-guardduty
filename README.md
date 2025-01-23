@@ -1,10 +1,6 @@
 # AWS GuardDuty
 
-Threat detection with AWS GuardDuty.
-
-Events are sourced from RDS Aurora, S3 and EC2.
-
-> 💡 GuardDuty will be enabled by Terraform
+Threat detection with AWS GuardDuty. Events are sourced from RDS Aurora, S3 and EC2.
 
 Set the variables:
 
@@ -13,6 +9,9 @@ cp config/template.tfvars .auto.tfvars
 ```
 
 Create the resources:
+
+> [!TIP]
+> GuardDuty will be automatically enabled by Terraform
 
 ```sh
 terraform plan
