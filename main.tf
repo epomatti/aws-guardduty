@@ -18,6 +18,13 @@ module "vpc" {
   region = var.aws_region
 }
 
+module "vpce" {
+  source    = "./modules/vpce"
+  region    = var.aws_region
+  vpc_id    = module.vpc.vpc_id
+  subnet_id = module.vpc.primary_subnet_id
+}
+
 module "ec2-instance" {
   source        = "./modules/ec2-instance"
   vpc_id        = module.vpc.vpc_id
@@ -49,11 +56,4 @@ module "rds" {
   primary_availability_zone = module.vpc.primary_availability_zone
   availability_zones        = module.vpc.availability_zones
   subnets                   = module.vpc.subnets
-}
-
-module "vpce" {
-  source    = "./modules/vpce"
-  region    = var.aws_region
-  vpc_id    = module.vpc.vpc_id
-  subnet_id = module.vpc.primary_subnet_id
 }
