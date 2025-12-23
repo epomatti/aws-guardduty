@@ -1,6 +1,9 @@
 locals {
   az1 = "${var.region}a"
   az2 = "${var.region}b"
+
+  availability_zones = [local.az1, local.az2]
+  subnets            = [aws_subnet.public1.id, aws_subnet.public2.id]
 }
 
 resource "aws_vpc" "main" {

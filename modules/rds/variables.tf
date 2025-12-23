@@ -2,7 +2,11 @@ variable "vpc_id" {
   type = string
 }
 
-variable "azs" {
+variable "primary_availability_zone" {
+  type = string
+}
+
+variable "availability_zones" {
   type = list(string)
 }
 
@@ -11,5 +15,9 @@ variable "subnets" {
 }
 
 variable "rds_instance_class" {
+  type = string
+}
+
+variable "engine_version" {
   type = string
 }

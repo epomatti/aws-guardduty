@@ -1,9 +1,9 @@
 locals {
-  affix = "guardduty-test-box"
+  name = "guardduty-sandbox"
 }
 
 resource "aws_iam_instance_profile" "box" {
-  name = "test-instance"
+  name = local.name
   role = aws_iam_role.box.id
 }
 
@@ -41,14 +41,14 @@ resource "aws_instance" "box" {
   }
 
   tags = {
-    Name = "${local.affix}"
+    Name = "${local.name}"
   }
 }
 
 ### IAM Role ###
 
 resource "aws_iam_role" "box" {
-  name = local.affix
+  name = local.name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -86,12 +86,12 @@ resource "aws_iam_role_policy_attachment" "s3" {
 }
 
 resource "aws_security_group" "box" {
-  name        = "ec2-ssm-${local.affix}"
+  name        = "ec2-ssm-${local.name}"
   description = "Controls access for EC2 via Session Manager"
   vpc_id      = var.vpc_id
 
   tags = {
-    Name = "sg-ssm-${local.affix}"
+    Name = "sg-ssm-${local.name}"
   }
 }
 
@@ -118,7 +118,7 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 locals {
-  aws_region     = data.aws_region.current.name
+  aws_region     = data.aws_region.current.region
   aws_account_id = data.aws_caller_identity.current.account_id
 }
 

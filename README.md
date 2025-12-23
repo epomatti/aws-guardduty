@@ -10,12 +10,12 @@ cp config/template.tfvars .auto.tfvars
 
 Create the resources:
 
-> [!TIP]
-> GuardDuty will be automatically enabled by Terraform
+> [!IMPORTANT]
+> Make sure GuardDuty is enabled for the account
 
 ```sh
 terraform plan
-terraform apply -auto-approve
+terraform apply
 ```
 
 Connect to the instance and check the initialization:

@@ -3,19 +3,19 @@ resource "aws_db_instance" "default" {
 
   db_name        = "guarddutydb"
   engine         = "postgres"
-  engine_version = "16.3"
+  engine_version = var.engine_version
 
   username = "postgres"
   password = "postgres"
 
   # Network
   db_subnet_group_name = aws_db_subnet_group.default.name
-  # availability_zone    = var.availability_zone
-  publicly_accessible = false
+  publicly_accessible  = false
+  availability_zone    = var.primary_availability_zone
 
   # Resources
   instance_class    = var.rds_instance_class
-  allocated_storage = 30
+  allocated_storage = 20
   storage_type      = "gp3"
 
   # Security

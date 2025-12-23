@@ -2,21 +2,15 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 5.0.0"
+      version = ">= 6.0.0"
     }
   }
 }
 
-provider "aws" {
-  region = var.aws_region
-}
+data "aws_guardduty_detector" "current" {}
 
-resource "aws_guardduty_detector" "main" {
-  enable = true
-}
-
-module "s3" {
-  source = "./modules/s3"
+locals {
+  guardduty_detector_id = data.aws_guardduty_detector.current.id
 }
 
 module "vpc" {
@@ -24,20 +18,11 @@ module "vpc" {
   region = var.aws_region
 }
 
-module "rds" {
-  count              = var.create_rds == true ? 1 : 0
-  source             = "./modules/rds"
-  vpc_id             = module.vpc.vpc_id
-  azs                = module.vpc.azs
-  subnets            = module.vpc.subnets
-  rds_instance_class = var.rds_instance_class
-}
-
 module "ec2-instance" {
   source        = "./modules/ec2-instance"
   vpc_id        = module.vpc.vpc_id
-  az            = var.primary_availability_zone
-  subnet        = module.vpc.subnets[0]
+  az            = module.vpc.primary_availability_zone
+  subnet        = module.vpc.primary_subnet_id
   ami           = var.ami
   instance_type = var.instance_type
   user_data     = var.user_data
@@ -45,14 +30,30 @@ module "ec2-instance" {
   depends_on = [module.vpce]
 }
 
+module "ipset" {
+  source                = "./modules/ipset"
+  guardduty_detector_id = local.guardduty_detector_id
+}
+
+module "s3" {
+  count  = var.create_s3 == true ? 1 : 0
+  source = "./modules/s3"
+}
+
+module "rds" {
+  count                     = var.create_rds == true ? 1 : 0
+  source                    = "./modules/rds"
+  rds_instance_class        = var.rds_instance_class
+  engine_version            = var.rds_engine_version
+  vpc_id                    = module.vpc.vpc_id
+  primary_availability_zone = module.vpc.primary_availability_zone
+  availability_zones        = module.vpc.availability_zones
+  subnets                   = module.vpc.subnets
+}
+
 module "vpce" {
   source    = "./modules/vpce"
   region    = var.aws_region
   vpc_id    = module.vpc.vpc_id
-  subnet_id = module.vpc.subnets[0]
-}
-
-module "ipset" {
-  source                = "./modules/ipset"
-  guardduty_detector_id = aws_guardduty_detector.main.id
+  subnet_id = module.vpc.primary_subnet_id
 }

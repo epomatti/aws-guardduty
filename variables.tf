@@ -1,15 +1,17 @@
 variable "aws_region" {
-  type    = string
-  default = "us-east-2"
+  type = string
 }
 
-variable "primary_availability_zone" {
-  type    = string
-  default = "us-east-2a"
+variable "create_s3" {
+  type = bool
 }
 
 variable "create_rds" {
   type = bool
+}
+
+variable "rds_engine_version" {
+  type = string
 }
 
 variable "rds_instance_class" {
